@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bstek.bdf3.dorado.jpa.JpaUtil;
 import com.bstek.bdf3.security.cache.SecurityCacheEvict;
-import com.bstek.bdf3.security.domain.Component;
-import com.bstek.bdf3.security.domain.Permission;
+import com.bstek.bdf3.security.orm.Component;
+import com.bstek.bdf3.security.orm.Permission;
 import com.bstek.bdf3.security.ui.builder.ViewBuilder;
 import com.bstek.bdf3.security.ui.builder.ViewComponent;
 import com.bstek.dorado.data.entity.EntityState;
@@ -44,7 +44,7 @@ public class PermissionServiceImpl implements PermissionService {
 		if(StringUtils.isEmpty(viewName)){
 			return Collections.EMPTY_LIST;
 		}
-		viewName = StringUtils.substringBefore(viewName, ".d");
+		viewName = StringUtils.substringBeforeLast(viewName, ".d");
 
 		String VIEWSTATE_KEY = ViewState.class.getName();
 		DoradoContext context = DoradoContext.getCurrent();
@@ -58,7 +58,7 @@ public class PermissionServiceImpl implements PermissionService {
 			}
 			if (viewConfig != null && viewConfig.getView()!=null && viewBuilder.support(viewConfig.getView())) {
 				View view = viewConfig.getView();
-				viewBuilder.build(view, root);
+				viewBuilder.build(view, root, root);
 			}
 			return root.getChildren();
 		} finally {

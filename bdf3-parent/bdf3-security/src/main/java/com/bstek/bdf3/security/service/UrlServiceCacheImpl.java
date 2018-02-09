@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.malagu.linq.JpaUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bstek.bdf3.jpa.JpaUtil;
 import com.bstek.bdf3.security.Constants;
-import com.bstek.bdf3.security.domain.Permission;
-import com.bstek.bdf3.security.domain.Url;
+import com.bstek.bdf3.security.orm.Permission;
+import com.bstek.bdf3.security.orm.Url;
 
 /**
  * @author Kevin Yang (mailto:kevin.yang@bstek.com)
@@ -21,7 +21,7 @@ import com.bstek.bdf3.security.domain.Url;
  */
 @Service
 @Transactional(readOnly = true)
-class UrlServiceCacheImpl implements UrlServiceCache {
+public class UrlServiceCacheImpl implements UrlServiceCache {
 
 
 	@Override

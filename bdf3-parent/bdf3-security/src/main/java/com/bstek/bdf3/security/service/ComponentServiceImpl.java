@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.malagu.linq.JpaUtil;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bstek.bdf3.jpa.JpaUtil;
-import com.bstek.bdf3.security.domain.Component;
-import com.bstek.bdf3.security.domain.Permission;
+import com.bstek.bdf3.security.orm.Component;
+import com.bstek.bdf3.security.orm.Permission;
 
 /**
  * @author Kevin Yang (mailto:kevin.yang@bstek.com)

@@ -1,6 +1,6 @@
 package com.bstek.bdf3.autoconfigure.dorado;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.springframework.boot.SpringApplication;
@@ -9,6 +9,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.ClassUtils;
 
+import com.bstek.dorado.core.CommonContext;
+import com.bstek.dorado.core.Context;
 import com.bstek.dorado.web.loader.DoradoLoader;
 
 public class DoradoPreloadSpringApplicationRunListener implements
@@ -22,31 +24,28 @@ public class DoradoPreloadSpringApplicationRunListener implements
 	}
 
 	@Override
-	public void started() {
-		if (ClassUtils.isPresent("com.bstek.dorado.web.loader.DoradoLoader", this.getClass().getClassLoader())){
-			System.setProperty("doradoHome", "classpath:dorado-home/");
-	
-			DoradoLoader doradoLoader = DoradoLoader.getInstance();
-			try {
-				doradoLoader.preload(null, true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			Set<Object> sources = new HashSet<Object>();
-			sources.addAll(doradoLoader
-					.getContextLocations(false));
-			application.setSources(sources);
-		}
-	}
-
-	@Override
 	public void environmentPrepared(ConfigurableEnvironment environment) {
 
 	}
 
 	@Override
-	public void contextPrepared(ConfigurableApplicationContext context) {
-
+	public void contextPrepared(ConfigurableApplicationContext applicationContext) {
+		if (ClassUtils.isPresent("com.bstek.dorado.web.loader.DoradoLoader", this.getClass().getClassLoader())){
+			System.setProperty("doradoHome", "classpath:dorado-home/");
+	
+			DoradoLoader doradoLoader = DoradoLoader.getInstance();
+			try {
+				Context context = CommonContext.init(applicationContext);
+				DoradoLoader.getInstance().setFailSafeContext(context);
+				doradoLoader.preload(true);;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Set<Object> sources = new LinkedHashSet<Object>();
+			sources.addAll(doradoLoader
+					.getContextLocations(false));
+			application.setSources(sources);
+		}
 	}
 
 	@Override
@@ -58,6 +57,11 @@ public class DoradoPreloadSpringApplicationRunListener implements
 	public void finished(ConfigurableApplicationContext context,
 			Throwable exception) {
 
+	}
+
+	@Override
+	public void starting() {
+		
 	}
 
 }

@@ -4,7 +4,7 @@
   <Context/>
   <Model>
     <DataType name="Role">
-      <Property name="creationType">com.bstek.bdf3.security.domain.Role</Property>
+      <Property name="creationType">com.bstek.bdf3.security.orm.Role</Property>
       <PropertyDef name="id">
         <Property></Property>
         <Property name="label">ID</Property>
@@ -37,7 +37,7 @@
       </PropertyDef>
     </DataType>
     <DataType name="User">
-      <Property name="creationType">com.bstek.bdf3.security.domain.User</Property>
+      <Property name="creationType">com.bstek.bdf3.security.orm.User</Property>
       <PropertyDef name="username">
         <Property></Property>
         <Property name="label">用户名</Property>
@@ -77,9 +77,13 @@
         <Property name="label">可用</Property>
         <Property name="defaultValue">true</Property>
       </PropertyDef>
+      <PropertyDef name="administrator">
+        <Property name="dataType">boolean</Property>
+        <Property name="label">是管理员</Property>
+      </PropertyDef>
     </DataType>
     <DataType name="RoleGrantedAuthority">
-      <Property name="creationType">com.bstek.bdf3.security.domain.RoleGrantedAuthority</Property>
+      <Property name="creationType">com.bstek.bdf3.security.orm.RoleGrantedAuthority</Property>
       <PropertyDef name="id">
         <Property></Property>
       </PropertyDef>
@@ -95,7 +99,7 @@
     </DataType>
   </Model>
   <View layout="padding:5;regionPadding:10">
-    <Property name="packages">font-awesome,colors</Property>
+    <Property name="packages">font-awesome-new,colors</Property>
     <DataSet id="dsRole">
       <Property name="dataType">[Role]</Property>
       <Property name="dataProvider">roleController#load</Property>

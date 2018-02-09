@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.6.RELEASE</version>
+		<version>1.5.3.RELEASE</version>
 	</parent>
 	<groupId>com.bstek.bdf3</groupId>
 	<artifactId>bdf3-dependencies</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<antlr2.version>2.7.7</antlr2.version>
 	</properties>
 	<dependencyManagement>
@@ -19,163 +19,183 @@
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-autoconfigure</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-dorado</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-dorado-jpa</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.malagu.linq</groupId>
+				<artifactId>linq</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.malagu.linq</groupId>
+				<artifactId>spring-boot-linq</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.malagu.multidatasource</groupId>
+				<artifactId>spring-boot-multidatasource</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.malagu.multientitymanagerfactory</groupId>
+				<artifactId>spring-boot-multientitymanagerfactory</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.malagu.multitenant</groupId>
+				<artifactId>multitenant</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-jpa</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<artifactId>bdf3-multitenant-ui</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.bstek.bdf3</groupId>
+				<artifactId>bdf3-notice</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.bstek.bdf3</groupId>
+				<artifactId>bdf3-notice-ui</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-log</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.bstek.bdf3</groupId>
+				<artifactId>bdf3-profile</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-cola</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-saas</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<artifactId>bdf3-security-orm</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-security</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-security-ui</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-saas-ui</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-importer</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-security-cola-ui</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-security-saas-cola-ui</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-dictionary</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-dictionary-ui</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-swfviewer</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-export</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-dbconsole</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-message</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-message-cola-ui</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-activiti</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-activiti-cola-ui</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>org.activiti</groupId>
-				<artifactId>activiti-spring-boot-starter-basic</artifactId>
-				<version>5.19.0.2</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-starter</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-starter-saas</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<artifactId>bdf3-starter-multitenant</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-starter-cola</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.bstek.bdf3</groupId>
-				<artifactId>bdf3-starter-saas-cola</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-starter-jetty</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.bdf3</groupId>
 				<artifactId>bdf3-starter-cola-jetty</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.dorado</groupId>
 				<artifactId>dorado-core</artifactId>
-				<version>7.5.2-SNAPSHOT</version>
+				<version>7.6.0-20170725.072955-30</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.dorado</groupId>
 				<artifactId>dorado-uploader</artifactId>
 				<version>1.0.20</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-jcl</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>com.bstek.dorado</groupId>
 				<artifactId>dorado-source-editor</artifactId>
 				<version>0.1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>com.bstek.dorado</groupId>
+				<artifactId>dorado-ueditor</artifactId>
+				<version>1.0.6</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
@@ -211,6 +231,16 @@
 				<groupId>com.itextpdf</groupId>
 				<artifactId>itext-asian</artifactId>
 				<version>5.2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>2.2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thoughtworks.paranamer</groupId>
+				<artifactId>paranamer</artifactId>
+				<version>2.8</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

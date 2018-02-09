@@ -12,8 +12,8 @@ import com.bstek.bdf3.dorado.jpa.JpaUtil;
 import com.bstek.bdf3.dorado.jpa.policy.SaveContext;
 import com.bstek.bdf3.dorado.jpa.policy.impl.SmartSavePolicyAdapter;
 import com.bstek.bdf3.security.cache.SecurityCacheEvict;
-import com.bstek.bdf3.security.domain.Permission;
-import com.bstek.bdf3.security.domain.Url;
+import com.bstek.bdf3.security.orm.Permission;
+import com.bstek.bdf3.security.orm.Url;
 
 
 
@@ -64,15 +64,14 @@ public class UrlServiceImpl implements UrlService {
 	public void save(List<Url> urls) {
 		JpaUtil.save(urls, new SmartSavePolicyAdapter() {
 			
-			
-			
 			@Override
-			public void beforeDelete(SaveContext context) {
+			public boolean beforeDelete(SaveContext context) {
 				Url url = context.getEntity();
 				JpaUtil.lind(Permission.class)
 					.equal("resourceId", url.getId())
 					.equal("resourceType", Url.RESOURCE_TYPE)
 					.delete();
+				return true;
 			}
 
 			@Override

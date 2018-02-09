@@ -14,11 +14,14 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.metamodel.SingularAttribute;
 
+import org.malagu.linq.lin.Lind;
+import org.malagu.linq.lin.Linu;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,8 +34,6 @@ import com.bstek.bdf3.dorado.jpa.policy.CriteriaPolicy;
 import com.bstek.bdf3.dorado.jpa.policy.SaveContext;
 import com.bstek.bdf3.dorado.jpa.policy.SavePolicy;
 import com.bstek.bdf3.dorado.jpa.policy.impl.DirtyTreeSavePolicy;
-import com.bstek.bdf3.jpa.lin.Lind;
-import com.bstek.bdf3.jpa.lin.Linu;
 import com.bstek.dorado.data.entity.EntityUtils;
 
 
@@ -59,20 +60,124 @@ public abstract class JpaUtil {
 		defaultSavePolicy = savePolicy;
 	}
 	
+	/**
+	 * 创建Linq
+	 * @param domainClass 领域类（实体类）
+	 * @param <T> 领域类（实体类）范型
+	 * @return Linq
+	 */
 	public static <T> Linq linq(Class<T> domainClass) {
 		return new LinqImpl(domainClass);
 	}
 	
+	/**
+	 * 创建Linq
+	 * @param domainClass 领域类（实体类）
+	 * @param resultClass 结果类
+	 * @param <T> 领域类（实体类）范型
+	 * @return Linq
+	 */
 	public static <T> Linq linq(Class<T> domainClass, Class<?> resultClass) {
 		return new LinqImpl(domainClass, resultClass);
 	}
 	
+	/**
+	 * 创建Lind
+	 * @param domainClass 领域类（实体类）
+	 * @param entityManager 实体类管理器
+	 * @return Lind
+	 */
 	public static Lind lind(Class<?> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.lind(domainClass);
+		return org.malagu.linq.JpaUtil.lind(domainClass);
 	}
 	
+	/**
+	 * 创建Linu
+	 * @param domainClass 领域类（实体类）
+	 * @return Linu
+	 */
 	public static Linu linu(Class<?> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.linu(domainClass);
+		return org.malagu.linq.JpaUtil.linu(domainClass);
+	}
+	
+	/**
+	 * 创建命名查询
+	 * @param name 查询的名称
+	 * @return Query
+	 */
+	public static Query namedQuery(String name) {
+		return org.malagu.linq.JpaUtil.namedQuery(name);
+	}
+	
+	/**
+	 * 创建命名查询
+	 * @param name 查询名称
+	 * @param entityManager 实体类管理器
+	 * @return Query
+	 */
+	public static Query namedQuery(String name, EntityManager entityManager) {
+		return org.malagu.linq.JpaUtil.namedQuery(name, entityManager);
+	}
+	
+	/**
+	 * 创建本地查询
+	 * @param sqlString 本地SQL查询字符串
+	 * @return Query
+	 */
+	public static Query nativeQuery(String sqlString) {
+		return org.malagu.linq.JpaUtil.nativeQuery(sqlString);
+	}
+	
+	/**
+	 * 创建本地查询
+	 * @param sqlString 本地SQL查询字符串
+	 * @param entityManager 实体类管理器
+	 * @return Query
+	 */
+	public static Query nativeQuery(String sqlString, EntityManager entityManager) {
+		return org.malagu.linq.JpaUtil.nativeQuery(sqlString, entityManager);
+	}
+	
+	/**
+	 * 创建本地查询
+	 * @param sqlString 本地SQL查询字符串
+	 * @param resultClass 结果实例的class
+	 * @return Query
+	 */
+	public static Query nativeQuery(String sqlString, Class<?> resultClass) {
+		return org.malagu.linq.JpaUtil.nativeQuery(sqlString, resultClass);
+	}
+	
+	/**
+	 * 创建本地查询
+	 * @param sqlString 本地SQL查询字符串
+	 * @param resultClass 结果实例的class
+	 * @param entityManager 实体类管理器
+	 * @return Query
+	 */
+	public static Query nativeQuery(String sqlString, Class<?> resultClass, EntityManager entityManager) {
+		return org.malagu.linq.JpaUtil.nativeQuery(sqlString, resultClass, entityManager);
+	}
+	
+	/**
+	 * 创建本地查询
+	 * @param sqlString 本地SQL查询字符串
+	 * @param resultSetMapping 结果集映射名称
+	 * @return Query
+	 */
+	public static Query nativeQuery(String sqlString, String resultSetMapping) {
+		return org.malagu.linq.JpaUtil.nativeQuery(sqlString, resultSetMapping);
+	}
+	
+	/**
+	 * 创建本地查询
+	 * @param sqlString 本地SQL查询字符串
+	 * @param resultSetMapping 结果集映射名称
+	 * @param entityManager 实体类管理器
+	 * @return Query
+	 */
+	public static Query nativeQuery(String sqlString, String resultSetMapping, EntityManager entityManager) {
+		return org.malagu.linq.JpaUtil.nativeQuery(sqlString, resultSetMapping, entityManager);
 	}
 	
 	/**
@@ -113,8 +218,14 @@ public abstract class JpaUtil {
 	}
 	
 	public static <T> T persist(T entity) {
-		EntityManager em = getEntityManager(GenricTypeUtils.getGenricType(entity));
-		em.persist(entity);
+		save(entity, new SavePolicy() {
+			
+			@Override
+			public void apply(SaveContext context) {
+				context.getEntityManager().persist(context.getEntity());
+			}
+			
+		});
 		return entity;
 	}
 	
@@ -180,63 +291,63 @@ public abstract class JpaUtil {
 	}
 	
 	public static <T> void removeAll(Class<T> domainClass) {
-		com.bstek.bdf3.jpa.JpaUtil.removeAll(domainClass);
+		org.malagu.linq.JpaUtil.removeAll(domainClass);
 	}
 	
 	public static <T> void removeAllInBatch(Class<T> domainClass) {
-		com.bstek.bdf3.jpa.JpaUtil.removeAllInBatch(domainClass);
+		org.malagu.linq.JpaUtil.removeAllInBatch(domainClass);
 	}
 	
 	public static <T, ID extends Serializable> T getOne(Class<T> domainClass, ID id) {
-		return com.bstek.bdf3.jpa.JpaUtil.getOne(domainClass, id);
+		return org.malagu.linq.JpaUtil.getOne(domainClass, id);
 	}
 	
 	public static <T> T findOne(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.findOne(domainClass);
+		return org.malagu.linq.JpaUtil.findOne(domainClass);
 	}
 	
 	public static <T> List<T> findAll(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.findAll(domainClass);
+		return org.malagu.linq.JpaUtil.findAll(domainClass);
 	}
 	
 	public static <T> List<T> findAll(CriteriaQuery<T> cq) {
-		return com.bstek.bdf3.jpa.JpaUtil.findAll(cq);
+		return org.malagu.linq.JpaUtil.findAll(cq);
 	}
 	
 	public static <T> Page<T> findAll(Class<T> domainClass, Pageable pageable) {
-		return com.bstek.bdf3.jpa.JpaUtil.findAll(domainClass, pageable);
+		return org.malagu.linq.JpaUtil.findAll(domainClass, pageable);
 	}
 	
 	public static <T> Page<T> findAll(CriteriaQuery<T> cq, Pageable pageable) {
-		return com.bstek.bdf3.jpa.JpaUtil.findAll(cq, pageable);
+		return org.malagu.linq.JpaUtil.findAll(cq, pageable);
 	}
 	
 	public static <T> EntityManager getEntityManager(T entity) {
-		return com.bstek.bdf3.jpa.JpaUtil.getEntityManager(GenricTypeUtils.getGenricType(entity));
+		return org.malagu.linq.JpaUtil.getEntityManager(GenricTypeUtils.getGenricType(entity));
 	}
 	
 	public static <T> EntityManager getEntityManager(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.getEntityManager(domainClass);
+		return org.malagu.linq.JpaUtil.getEntityManager(domainClass);
 	}
 	
 	public static <T> EntityManagerFactory getEntityManagerFactory(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.getEntityManagerFactory(domainClass);
+		return org.malagu.linq.JpaUtil.getEntityManagerFactory(domainClass);
 	}
 	
 	public static <T> boolean isEntityClass(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.isEntityClass(domainClass);
+		return org.malagu.linq.JpaUtil.isEntityClass(domainClass);
 	}
 	
 	public static <T> Long count(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.count(domainClass);
+		return org.malagu.linq.JpaUtil.count(domainClass);
 	}
 	
 	public static <T> Long count(CriteriaQuery<T> cq) {
-		return com.bstek.bdf3.jpa.JpaUtil.count(cq);
+		return org.malagu.linq.JpaUtil.count(cq);
 	}
 	
 	public static <T> boolean exists(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.exists(domainClass);
+		return org.malagu.linq.JpaUtil.exists(domainClass);
 	}
 	
 	public static <T> boolean exists(CriteriaQuery<T> cq) {
@@ -244,17 +355,17 @@ public abstract class JpaUtil {
 	}
 	
 	public static <T> void flush(T entity) {
-		Assert.notNull(entity);
+		Assert.notNull(entity, "entity can not be null.");
 		EntityManager em = getEntityManager(entity.getClass());
 		em.flush();
 	}
 	
 	public static <T> void flush(Class<T> domainClass) {
-		com.bstek.bdf3.jpa.JpaUtil.flush(domainClass);
+		org.malagu.linq.JpaUtil.flush(domainClass);
 	}
 	
 	public static Long executeCountQuery(TypedQuery<Long> query) {
-		return com.bstek.bdf3.jpa.JpaUtil.executeCountQuery(query);
+		return org.malagu.linq.JpaUtil.executeCountQuery(query);
 	}
 	
 	/**
@@ -400,14 +511,47 @@ public abstract class JpaUtil {
 	}
 	
 	public static <T> TypedQuery<Long> getCountQuery(CriteriaQuery<T> cq) {
-		return com.bstek.bdf3.jpa.JpaUtil.getCountQuery(cq);
+		return org.malagu.linq.JpaUtil.getCountQuery(cq);
 	}
 	
 	public static <T> String getIdName(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.getIdName(domainClass);
+		return org.malagu.linq.JpaUtil.getIdName(domainClass);
 	}
 	
 	public static <T> SingularAttribute<? super T, ?> getId(Class<T> domainClass) {
-		return com.bstek.bdf3.jpa.JpaUtil.getId(domainClass);
+		return org.malagu.linq.JpaUtil.getId(domainClass);
 	}
+	
+	public static EntityManagerFactory getEntityManagerFactory() {
+		return org.malagu.linq.JpaUtil.getEntityManagerFactory();
+	}
+	
+	public static EntityManager getEntityManager(String entityManagerFactoryName) {
+		return org.malagu.linq.JpaUtil.getEntityManager(entityManagerFactoryName);
+	}
+	
+	public static EntityManager createEntityManager(String entityManagerFactoryName) {
+		return org.malagu.linq.JpaUtil.createEntityManager(entityManagerFactoryName);
+	}
+	
+	public static EntityManagerFactory getEntityManagerFactory(String entityManagerFactoryName) {
+		return org.malagu.linq.JpaUtil.getEntityManagerFactory(entityManagerFactoryName);
+	}
+	
+	/**
+	 * 返回默认的EntityManager
+	 * @return EntityManager
+	 */
+	public static EntityManager getEntityManager() {
+		return org.malagu.linq.JpaUtil.getEntityManager();
+	}
+	
+	/**
+	 * 创建默认的EntityManager
+	 * @return EntityManager
+	 */
+	public static EntityManager createEntityManager() {
+		return org.malagu.linq.JpaUtil.createEntityManager();
+	}
+
 }
