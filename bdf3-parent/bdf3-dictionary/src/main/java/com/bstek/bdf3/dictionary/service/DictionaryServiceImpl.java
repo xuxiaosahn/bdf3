@@ -3,12 +3,12 @@ package com.bstek.bdf3.dictionary.service;
 import java.util.List;
 import java.util.Map;
 
+import org.malagu.linq.JpaUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bstek.bdf3.dictionary.domain.Dictionary;
 import com.bstek.bdf3.dictionary.domain.DictionaryItem;
-import com.bstek.bdf3.jpa.JpaUtil;
 
 /**
  * @author Kevin Yang (mailto:kevin.yang@bstek.com)
@@ -40,6 +40,11 @@ public class DictionaryServiceImpl implements DictionaryService {
 	@Override
 	public String getDefaultValueBy(String code) {
 		return getDefaultValueItemBy(code).getValue();
+	}
+	
+	@Override
+	public String getDefaultKeyBy(String code) {
+		return getDefaultValueItemBy(code).getKey();
 	}
 
 	@Override

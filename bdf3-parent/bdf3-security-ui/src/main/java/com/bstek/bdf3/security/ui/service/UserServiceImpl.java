@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bstek.bdf3.dorado.jpa.JpaUtil;
 import com.bstek.bdf3.dorado.jpa.policy.SaveContext;
 import com.bstek.bdf3.dorado.jpa.policy.impl.SmartSavePolicyAdapter;
-import com.bstek.bdf3.security.domain.RoleGrantedAuthority;
-import com.bstek.bdf3.security.domain.User;
+import com.bstek.bdf3.security.orm.RoleGrantedAuthority;
+import com.bstek.bdf3.security.orm.User;
 import com.bstek.dorado.data.provider.Criteria;
 import com.bstek.dorado.data.provider.Page;
 
@@ -21,7 +21,7 @@ import com.bstek.dorado.data.provider.Page;
  * @author Kevin Yang (mailto:kevin.yang@bstek.com)
  * @since 2017年1月2日
  */
-@Service
+@Service("ui.userService")
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
@@ -35,12 +35,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public String validateOldPassword(String oldPassword) {
-		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String password = JpaUtil.getOne(User.class, user.getUsername()).getPassword();
-		if (passwordEncoder.matches(oldPassword, password)) {
-			return null;
+		if (oldPassword != null) {
+			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String password = JpaUtil.getOne(User.class, user.getUsername()).getPassword();
+			if (passwordEncoder.matches(oldPassword, password)) {
+				return null;
+			}
 		}
-		return "旧密码输入不正确。";
+		
+		return "原来密码输入不正确。";
 	}
 	
 	@Override
@@ -49,17 +52,19 @@ public class UserServiceImpl implements UserService {
 		JpaUtil.save(users, new SmartSavePolicyAdapter() {
 
 			@Override
-			public void beforeInsert(SaveContext context) {
+			public boolean beforeInsert(SaveContext context) {
 				User user = context.getEntity();
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
+				return true;
 			}
 
 			@Override
-			public void beforeDelete(SaveContext context) {
+			public boolean beforeDelete(SaveContext context) {
 				User user = context.getEntity();
 				JpaUtil.lind(RoleGrantedAuthority.class)
 					.equal("actorId", user.getUsername())
 					.delete();
+				return true;
 			}
 			
 			

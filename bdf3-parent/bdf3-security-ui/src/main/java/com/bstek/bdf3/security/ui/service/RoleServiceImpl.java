@@ -10,9 +10,9 @@ import com.bstek.bdf3.dorado.jpa.policy.SaveContext;
 import com.bstek.bdf3.dorado.jpa.policy.SavePolicy;
 import com.bstek.bdf3.dorado.jpa.policy.impl.SmartSavePolicyAdapter;
 import com.bstek.bdf3.security.cache.SecurityCacheEvict;
-import com.bstek.bdf3.security.domain.Permission;
-import com.bstek.bdf3.security.domain.Role;
-import com.bstek.bdf3.security.domain.RoleGrantedAuthority;
+import com.bstek.bdf3.security.orm.Permission;
+import com.bstek.bdf3.security.orm.Role;
+import com.bstek.bdf3.security.orm.RoleGrantedAuthority;
 import com.bstek.dorado.data.provider.Criteria;
 import com.bstek.dorado.data.provider.Page;
 
@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
 	class RoleSavePolicy extends SmartSavePolicyAdapter {
 
 		@Override
-		public void beforeDelete(SaveContext context) {
+		public boolean beforeDelete(SaveContext context) {
 			if (context.getEntity() instanceof Role) {
 				Role role = context.getEntity();
 				JpaUtil
@@ -55,6 +55,7 @@ public class RoleServiceImpl implements RoleService {
 					.equal("roleId", role.getId())
 					.delete();
 			}
+			return true;
 		}
 
 	}

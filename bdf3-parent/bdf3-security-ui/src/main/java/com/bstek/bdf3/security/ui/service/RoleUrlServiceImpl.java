@@ -12,9 +12,9 @@ import com.bstek.bdf3.dorado.jpa.policy.SaveContext;
 import com.bstek.bdf3.dorado.jpa.policy.SavePolicy;
 import com.bstek.bdf3.dorado.jpa.policy.impl.SmartSavePolicyAdapter;
 import com.bstek.bdf3.security.cache.SecurityCacheEvict;
-import com.bstek.bdf3.security.domain.Component;
-import com.bstek.bdf3.security.domain.Permission;
-import com.bstek.bdf3.security.domain.Url;
+import com.bstek.bdf3.security.orm.Component;
+import com.bstek.bdf3.security.orm.Permission;
+import com.bstek.bdf3.security.orm.Url;
 
 
 
@@ -51,7 +51,7 @@ public class RoleUrlServiceImpl implements RoleUrlService {
 	class PermissionSavePolicy extends SmartSavePolicyAdapter {
 
 		@Override
-		public void beforeDelete(SaveContext context) {
+		public boolean beforeDelete(SaveContext context) {
 			Permission permission = context.getEntity();
 			Linq linq = JpaUtil.linq(Permission.class);
 			linq
@@ -72,8 +72,8 @@ public class RoleUrlServiceImpl implements RoleUrlService {
 					.in("id", ids)
 					.delete();
 			}
-			
-		}
+			return true;
+		}	
 
 	}
 

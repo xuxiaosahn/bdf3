@@ -24,9 +24,6 @@
     </DataType>
   </Model>
   <View>
-    <Property name="style">
-      <Property name="background">#112345</Property>
-    </Property>
     <Container>
       <Property name="style">
         <Property name="background-image">url(&quot;${configure['bdf3.loginImageBg']}&quot;)</Property>
@@ -51,6 +48,9 @@
               <Control>
                 <Property name="exClassName">banner</Property>
                 <Property name="height">64</Property>
+                <Property name="style">
+                  <Property name="background">${configure['bdf3.logoLarge']}</Property>
+                </Property>
               </Control>
               <Label>
                 <Property name="text">${configure['bdf3.appName']}</Property>
@@ -91,7 +91,7 @@
                   <Editor/>
                 </AutoFormElement>
                 <Label>
-                  <Property name="text">保持登陆</Property>
+                  <Property name="text">保持登录</Property>
                 </Label>
                 <Button layoutConstraint="colSpan:2">
                   <Property name="caption">登 录</Property>
@@ -101,7 +101,7 @@
                 </Button>
                 <Tip layoutConstraint="colSpan:2">
                   <Property name="floating">false</Property>
-                  <Property name="text">${authenticationErrorMsg}</Property>
+                  <Property name="text">${authenticationErrorMsg==&quot;坏的凭证&quot;?&quot;用户名或密码错误&quot;:authenticationErrorMsg}</Property>
                   <Property name="visible">${authenticationErrorMsg!='none'}</Property>
                   <Property name="hideMode">display</Property>
                 </Tip>

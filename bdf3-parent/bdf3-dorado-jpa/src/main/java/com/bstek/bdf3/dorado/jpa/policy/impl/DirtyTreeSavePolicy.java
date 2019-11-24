@@ -9,8 +9,6 @@ import java.util.Map;
 
 import javax.persistence.Id;
 
-import org.hibernate.Session;
-
 import com.bstek.bdf3.dorado.jpa.BeanUtils;
 import com.bstek.bdf3.dorado.jpa.FieldUtils;
 import com.bstek.bdf3.dorado.jpa.GenricTypeUtils;
@@ -81,8 +79,9 @@ public class DirtyTreeSavePolicy implements SavePolicy {
 	}
 	
 	protected List<Field> getPersistentFields(SaveContext context) {
+		Object entity = context.getEntity();
 		List<Field> result = new ArrayList<Field>();
-		List<Field> fields = FieldUtils.getFields(ProxyBeanUtils.getProxyTargetType(context.getEntity()));
+		List<Field> fields = FieldUtils.getFields(ProxyBeanUtils.getProxyTargetType(entity));
 		if(fields != null) {
 			for (Field field : fields) {
 				Class<?> propertyClass = field.getType();
@@ -95,15 +94,6 @@ public class DirtyTreeSavePolicy implements SavePolicy {
 			}
 		}
 		return result;
-	}
-	
-	protected boolean isEntityClass(Class<?> cls, Session session) {
-		if (cls != null 
-				&&cls != String.class 
-				&&session.getSessionFactory().getClassMetadata(cls) != null) {
-			return true;
-		}
-		return false;
 	}
 	
 	protected List<Map<String, Object>> getNeedGeneratorFields(Object entity) {

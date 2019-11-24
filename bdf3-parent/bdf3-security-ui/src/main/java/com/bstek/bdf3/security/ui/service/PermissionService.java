@@ -3,7 +3,7 @@ package com.bstek.bdf3.security.ui.service;
 import java.util.Collection;
 import java.util.List;
 
-import com.bstek.bdf3.security.domain.Permission;
+import com.bstek.bdf3.security.orm.Permission;
 import com.bstek.bdf3.security.ui.builder.ViewComponent;
 
 
@@ -14,7 +14,7 @@ import com.bstek.bdf3.security.ui.builder.ViewComponent;
  */
 public interface PermissionService {
 
-	Collection<ViewComponent> loadComponents(String viewName) throws Exception;
+	Collection<ViewComponent> loadComponents(String viewName);
 
 	List<Permission> loadPermissions(String roleId, String urlId);
 

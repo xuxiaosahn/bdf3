@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.bstek.bdf3</groupId>
 		<artifactId>bdf3-dependencies</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>2.0.2.RELEASE</version>
 	</parent>
 	<artifactId>bdf3-starter-parent</artifactId>
 	<packaging>pom</packaging>
@@ -44,56 +44,11 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/*.xml</include>
-					<include>**/*.xsd</include>
-					<include>**/*.schemas</include>
-					<include>**/*.handlers</include>
-					<include>**/*.properties</include>
-					<include>**/*.png</include>
-					<include>**/*.jpg</include>
-					<include>**/*.gif</include>
-					<include>**/*.css</include>
-					<include>**/*.js</include>
-					<include>**/*.bpmn</include>
-					<include>**/*.bpmn2</include>
-					<include>**/*.swf</include>
-					<include>**/*.swz</include>
-					<include>**/*.html</include>
-					<include>**/*.jsp</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-					<include>**/*.xsd</include>
-					<include>**/*.schemas</include>
-					<include>**/*.handlers</include>
-					<include>**/*.properties</include>
-					<include>**/*.png</include>
-					<include>**/*.jpg</include>
-					<include>**/*.gif</include>
-					<include>**/*.css</include>
-					<include>**/*.js</include>
-					<include>**/*.bpmn</include>
-					<include>**/*.bpmn2</include>
-					<include>**/*.html</include>
-					<include>**/*.jsp</include>
-				</includes>
-			</resource>
-		</resources>
 	</build>
 	<modules>
-		<module>bdf3-sample-cola</module>
-		<module>bdf3-sample-replaceuser</module>
-		<module>bdf3-sample-saas-cola</module>
-		<module>bdf3-sample-activiti-cola</module>
+		<!-- <module>bdf3-sample-cola</module>
 		<module>bdf3-sample</module>
 		<module>bdf3-sample-cola-base</module>
-		<module>bdf3-sample-saas</module>
+		<module>bdf3-sample-multitenant</module> -->
 	</modules>
 </project>

@@ -13,23 +13,31 @@
       <ClientEvent name="onCurrentChange" signature="self,arg,dsUrl">arg.newCurrent.getAsync(&quot;permissions&quot;, function(permissions) {
 	var urls = dsUrl.getData();
 	var dtUrl = view.get(&quot;@Url&quot;);
-	dtUrl.getPropertyDef(&quot;checked&quot;).disableListeners();
-	urls.each(function(url) {
-		if (url.get(&quot;checked&quot;)) {
-			url.set(&quot;checked&quot;, false);
+	var doUrls = function(urls) {
+		if (urls.entityCount &lt;= 0) {
+			return;
 		}
-		permissions.each(function(p) {
-			if (url.get(&quot;id&quot;) == p.get(&quot;resourceId&quot;)) {
-				url.set(&quot;checked&quot;, true);
-				return false;
+		urls.each(function(url) {
+			if (url.get(&quot;checked&quot;)) {
+				url.set(&quot;checked&quot;, false);
 			}
+			permissions.each(function(p) {
+				if (url.get(&quot;id&quot;) == p.get(&quot;resourceId&quot;)) {
+					url.set(&quot;checked&quot;, true);
+					return false;
+				}
+			});
+			doUrls(url.get(&quot;children&quot;));
 		});
-	});
+		
+	};
+	dtUrl.getPropertyDef(&quot;checked&quot;).disableListeners();
+	doUrls(urls);
 	dtUrl.getPropertyDef(&quot;checked&quot;).enableListeners();
 });
 
 </ClientEvent>
-      <Property name="creationType">com.bstek.bdf3.security.domain.Role</Property>
+      <Property name="creationType">com.bstek.bdf3.security.orm.Role</Property>
       <PropertyDef name="id">
         <Property></Property>
         <Property name="label">ID</Property>
@@ -51,7 +59,7 @@
       </Reference>
     </DataType>
     <DataType name="Url">
-      <Property name="creationType">com.bstek.bdf3.security.domain.Url</Property>
+      <Property name="creationType">com.bstek.bdf3.security.orm.Url</Property>
       <PropertyDef name="id">
         <Property></Property>
       </PropertyDef>
@@ -133,7 +141,7 @@ function doPermission(url, checked) {
       </PropertyDef>
     </DataType>
     <DataType name="Permission">
-      <Property name="creationType">com.bstek.bdf3.security.domain.Permission</Property>
+      <Property name="creationType">com.bstek.bdf3.security.orm.Permission</Property>
       <PropertyDef name="id">
         <Property></Property>
       </PropertyDef>
@@ -156,7 +164,7 @@ function doPermission(url, checked) {
     </DataType>
   </Model>
   <View layout="regionPadding:15">
-    <Property name="packages">font-awesome,entypo,colors</Property>
+    <Property name="packages">font-awesome-new,entypo,colors</Property>
     <DataSet id="dsUrl">
       <Property name="dataType">[Url]</Property>
       <Property name="dataProvider">urlController#load</Property>
